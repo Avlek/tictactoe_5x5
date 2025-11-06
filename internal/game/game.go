@@ -2,16 +2,24 @@ package game
 
 import (
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
 type Game struct {
-	board [3][3]rune
+	input *Input
+	board *Board
 	turn  rune
 }
 
-func NewGame() *Game {
-	return &Game{turn: 'X'}
+func NewGame() (*Game, error) {
+	board, err := NewBoard()
+	if err != nil {
+		return nil, err
+	}
+	return &Game{
+		input: NewInput(),
+		board: board,
+		turn:  'X',
+	}, nil
 }
 
 func (g *Game) Update() error {
@@ -19,9 +27,9 @@ func (g *Game) Update() error {
 }
 
 func (g *Game) Draw(screen *ebiten.Image) {
-	ebitenutil.DebugPrint(screen, "Tic Tac Toe\n(X/O)")
+	g.board.Draw(screen)
 }
 
 func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
-	return 600, 600
+	return 200, 200
 }
