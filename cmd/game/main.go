@@ -9,10 +9,7 @@ import (
 )
 
 func main() {
-	g, err := game.NewGame()
-	if err != nil {
-		log.Fatal(err)
-	}
+	g := game.New()
 
 	ebiten.SetWindowSize(600, 600)
 	ebiten.SetWindowTitle("Tic Tac Toe")
